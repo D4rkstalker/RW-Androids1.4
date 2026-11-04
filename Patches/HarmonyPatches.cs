@@ -1148,11 +1148,17 @@ namespace Androids
                 //Override the method. (Do nothing in this case)
                 return false;
             }
-            else
+
+            // Droid temperature givers must keep running: HediffGiver_Heat also
+            // applies ambient-air burn damage. Suppress only temperature illnesses.
+            if (pawn?.def?.defName == "ChjDroid" &&
+                (hdDef == RimWorld.HediffDefOf.Hypothermia || hdDef == RimWorld.HediffDefOf.Heatstroke))
             {
-                //Let original method run.
-                return true;
+                return false;
             }
+
+            //Let original method run.
+            return true;
         }
 
         /// <summary>
